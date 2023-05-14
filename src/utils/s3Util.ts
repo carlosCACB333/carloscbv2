@@ -1,21 +1,29 @@
 import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { s3 } from "./s3";
+import { s3 } from "./aws";
 import { config } from "@/config";
-import { log } from "console";
 
-export const saveImage = async (
-  image: File,
-  fileName: string
-): Promise<boolean> => {
-  const image_buffer = Buffer.from(await image.arrayBuffer());
-  const response = await s3.send(
-    new PutObjectCommand({
-      Bucket: config.s3.bucket,
-      Key: fileName,
-      Body: image_buffer,
-    })
-  );
-  return response.$metadata.httpStatusCode === 200;
+export const saveImage = async (image: File) => {
+  try {
+    const image_buffer = Buffer.from(await image.arrayBuffer());
+    const photo = image.name;
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: config.s3.bucket,
+        Key: photo,
+        Body: image_buffer,
+      })
+    );
+
+    return {
+      ok: true,
+      photo,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      photo: "",
+    };
+  }
 };
 
 interface ImageData {

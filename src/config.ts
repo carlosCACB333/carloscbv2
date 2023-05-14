@@ -5,4 +5,5 @@ export const config = {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
     bucket: "recog-data-ia",
   },
+  mongoUrl: process.env.MONGO_URL!,
 };

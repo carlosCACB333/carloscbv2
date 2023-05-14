@@ -1,4 +1,4 @@
-import { getAllImages } from "@/utils/s3Utils";
+import { getAllImages } from "@/utils/s3Util";
 import Image from "next/image";
 
 export default async function Home() {
