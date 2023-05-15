@@ -7,12 +7,13 @@ export async function POST(request: NextRequest) {
   const image = data.get("image");
   const firstName = data.get("firstName")?.toString() || "";
   const lastName = data.get("lastName")?.toString() || "";
-  const type = data.get("Type")?.toString() || "";
+  const type = data.get("type")?.toString() || "";
 
   const { photo, ok } = await saveImage(image as File);
 
   if (!ok) {
     return NextResponse.json({
+      status: "error",
       message: "Ocurrio un error al guardar la imagen",
     });
   }
@@ -25,11 +26,13 @@ export async function POST(request: NextRequest) {
   const employe = await EmployeService.save(dataE);
   if (!employe) {
     return NextResponse.json({
+      status: "error",
       message: "Ocurrio un error al guardar el usuario",
     });
   }
 
   return NextResponse.json({
+    status: "ok",
     message: "Usuario guardado",
     data: employe,
   });
@@ -40,12 +43,14 @@ export async function GET() {
 
   if (!employees) {
     return NextResponse.json({
+      status: "error",
       message: "Ocurrio un error al obtener los usuarios",
     });
   }
 
   return NextResponse.json({
-    message: "ok",
+    status: "ok",
+    message: "Usuarios obtenidos",
     data: employees,
   });
 }

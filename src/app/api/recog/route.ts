@@ -9,12 +9,14 @@ export async function POST(request: NextRequest) {
 
   if (!res) {
     return NextResponse.json({
+      status: "error",
       message: "Ocurrio un error en la comparacion",
     });
   }
 
   return NextResponse.json({
-    message: "ok",
+    status: "ok",
+    message: "Comparacion exitosa",
     data: res,
   });
 }

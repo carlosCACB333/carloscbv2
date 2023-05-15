@@ -11,6 +11,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
 
   if (!employe) {
     return NextResponse.json({
+      status: "error",
       message: "Ocurrio un error al eliminar el usuario",
     });
   }
@@ -18,6 +19,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
   await deleteImage(employe.photo);
 
   return NextResponse.json({
+    status: "ok",
     message: "Usuario eliminado",
     data: employe,
   });
