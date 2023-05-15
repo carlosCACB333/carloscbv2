@@ -22,4 +22,14 @@ export class EmployeService {
       return null;
     }
   }
+
+  public static async delete(id: string) {
+    try {
+      await dbConnection();
+      return await this.model.findByIdAndDelete(id);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
 }

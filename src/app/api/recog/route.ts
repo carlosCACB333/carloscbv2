@@ -1,8 +1,7 @@
 import { getSimilarity } from "@/utils/recognitionUtil";
-import { log } from "console";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   // image from url
   const data = await request.formData();
   const image = data.get("image") as File;

@@ -1,8 +1,8 @@
 import { EmployeService } from "@/services";
-import { getAllImages, saveImage } from "@/utils/s3Util";
-import { NextResponse } from "next/server";
+import { saveImage } from "@/utils/s3Util";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const data = await request.formData();
   const image = data.get("image");
   const firstName = data.get("firstName")?.toString() || "";
@@ -36,8 +36,16 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
+  const employees = await EmployeService.getAll();
+
+  if (!employees) {
+    return NextResponse.json({
+      message: "Ocurrio un error al obtener los usuarios",
+    });
+  }
+
   return NextResponse.json({
-    message: "Imagenes",
-    data: await getAllImages(),
+    message: "ok",
+    data: employees,
   });
 }
